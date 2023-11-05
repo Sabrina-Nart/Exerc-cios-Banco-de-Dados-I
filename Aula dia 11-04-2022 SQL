@@ -1,0 +1,130 @@
+﻿Conversão de modelo conceitual para modelo lógico e SQL de criação de estruturas do banco de dados
+
+Observação: Para toda regra sempre pode existir exceção!!
+
+- Primeira Regra: Toda entidade vira uma tabela do banco de dados;
+- Segunda Regra: Todo identificador de entidade vira chave primaria; //Pode ser simples ou composto
+- Terceira Regra: Todo relacionamento se tornará, chave estrangeira ou tabela, dependendo da cardinalidade;
+				- Relacionamento Muitos para Muitos(N:N): O relacionamento vira uma tabela;
+				- Relacionamento Um para Muitos(1:N): A chave primária da tabela paí vira chave estrangeira na 
+				  tabela filha;
+				- Relacionamento Um para Um(1:1): Deve ser analisado a cardinalidade mínima e o negócio para 
+				  determinar a ação;
+- Quarta Regra: O relacionamento e a cardinalidade determinam se a chave estrangeira participará da chave 
+                primária da tabela filha;
+
+
+
+
+DML - DATA MANIPULATION LANGUAGE(LINGUAGEM DE MANIPULAÇÃO DE DADOS)
+
+
+
+DDL - DATA DEFINITION LANGUAGE(LINGUAGEM DE DEFINIÇÃO DE DADOS)
+- COMANDO DE CRIAÇÃO DE ESTRUTURAS
+	CREATE TABLE
+- COMANDO DE ALTERAÇÃO DE ESTRUTURAS
+	ALTER TABLE 
+- COMANDO DE EXCLUSÃO/APAGAR ESTRUTURAS
+	DROP TABLE
+	TRUNCATE
+
+
+-----------------CRIANDO O EXEMPLO DA TABELA DE PESSOAS-------------------------
+CREATE TABLE PESSOAS(
+I_PESSOA INT NOT NULL,
+NOME VARCHAR(70) NOT NULL,
+CPF CHAR(11),
+CONSTRAINT PK_PESSOAS PRIMARY KEY(I_PESSOA)
+);
+
+
+CREATE TABLE LOGRADOUROS(
+I_LOGRADOURO INT NOT NULL,
+TIPO VARCHAR(10) NOT NULL,
+NOME VARCHAR(70) NOT NULL,
+CONSTRAINT PK_LOGRADOUROS PRIMARY KEY(I_LOGRADOURO)
+);
+
+
+CREATE TABLE PESSOAS_LOGRADOUROS(
+I_LOGRADOURO INT NOT NULL,
+I_PESSOA INT NOT NULL,
+TIPO CHAR(1) NOT NULL,
+CONSTRAINT PK_PESSOAS_LOGRADOUROS PRIMARY KEY(I_LOGRADOURO, I_PESSOA, TIPO),
+CONSTRAINT FK_PESSOAS_LOGRADOUROS_LOGRADOUROS FOREIGN KEY(I_LOGRADOURO) REFERENCES LOGRADOUROS(I_LOGRADOURO), //Estou  na tabela de pessoas_logradouros 									e referenciado com a tabela de logradouros - 									tabela onde estou com a tabela referenciada
+CONSTRAINT FK_PESSOAS_LOGRADOUROS_PESSOAS FOREIGN KEY(I_PESSOA) REFERENCES PESSOAS(I_PESSOA)
+);
+
+
+COMMIT; //Confirmar gravação dessa informação
+
+
+---------------------------------------------------------------------------------------
+--EXERCíCIO CRIAR MODELO LÓGICO E FíSICO(SQLs) DO MODELO CONCEITUAL DA FÓRMULA 1
+---------------------------------------------------------------------------------------
+
+
+
+
+CONSULTA DE DADOS
+SELECT * FROM NOME_DA_TABELA; //SELECIONA TUDO ORIUNDO
+
+SELECT * FROM PESSOAS
+
+INCLUSÃO DE DADOS
+INSERT INTO NOME_DA_TABELA(NOME_DA_COLUNAS_SEPARADAS_POR_VIRGULA)
+  VALUES(LISTA_DE_VALORES_SEPARADOS_POR_VIRGULA)
+
+INSERT INTO PESSOAS VALUES(1, 'João', '12345678901');
+COMMIT;
+INSERT INTO PESSOAS VALUES(2, 'Mária', '23456789');
+COMMIT;
+INSERT INTO PESSOAS VALUES(3, 'José', '3234567898');
+COMMIT;
+INSERT INTO PESSOAS VALUES(4, 'Eduardo', '42345678876');
+COMMIT;
+INSERT INTO PESSOAS VALUES(5, 'Eduarda', '5234567896');
+COMMIT;
+INSERT INTO PESSOAS VALUES(6, 'Alam', '623456756');
+COMMIT;
+
+INSERT INTO PESSOAS(NOME, I_PESSOA, CPF)
+      VALUES('ABREU', 7, '78901123456')
+
+INSERT INTO PESSOAS(NOME, I_PESSOA, CPF)
+      VALUES('LUANA', 8, NULL);
+INSERT INTO PESSOAS(NOME, I_PESSOA, CPF)
+      VALUES(9, 'MARIA CPF')
+      INSERT INTO PESSOAS(NOME, I_PESSOA, CPF)
+      VALUES(10,'PAULO CPF', NULL);
+
+
+ALTERAÇÃO DE DADOS
+  UPDATE NOME_DATA_TABELA 
+     SET NOME_DE_COLUNA = VALOR_PARA_COLUNA;
+	 NOME_DE_COLUNA = VALOR_PARA_COLUNA;
+         NOME_DE_COLUNA = VALOR_PARA_COLUNA;
+         NOME_DE_COLUNA = VALOR_PARA_COLUNA;
+         ...
+         NOME_DE_COLUNA = VALOR_PARA_COLUNA
+      WHERE LISTA_DE_CONDIÇÕES_A_SEREM_ATENDIDAS;
+
+EXCLUSÃO DE DADOS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
